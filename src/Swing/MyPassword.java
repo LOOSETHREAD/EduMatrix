@@ -1,4 +1,4 @@
-package Swing;
+    package Swing;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -41,11 +41,11 @@ public class MyPassword extends JPasswordField {
         paintIcon(g);
         //  paint border
         if (isFocusOwner()) {
-            g.setColor(new Color(6, 135, 196));
+            g.setColor(new Color(230, 7, 7));
             g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
             g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
         } else {
-            g.setColor(new Color(76, 181, 195));
+            g.setColor(new Color(230, 7, 7));
             g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
             g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
         }
