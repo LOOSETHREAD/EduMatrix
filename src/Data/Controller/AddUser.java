@@ -5,20 +5,18 @@ import java.security.MessageDigest;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import Data.Models.ModelUser;
+import Data.Models.ModelFacultyUser;
 import Data.Database.DatabaseConnection;
 
 
 
 public class AddUser {
     
-    public AddUser(){
-}
     
-    public  boolean addUserToDatabase(ModelUser data) throws ClassNotFoundException {
+    public  boolean addFacultyToDatabase(ModelFacultyUser data) throws ClassNotFoundException {
     try {
         
-        String checkSql = "SELECT COUNT(*) AS count FROM user";
+        String checkSql = "SELECT COUNT(*) AS count FROM facultyuser";
         PreparedStatement checkStatement = DatabaseConnection.getInstance().getConnection().prepareStatement(checkSql);
         ResultSet resultSet = checkStatement.executeQuery();
         resultSet.next();
@@ -27,16 +25,15 @@ public class AddUser {
         String sql;
         sql = switch (rowCount) {
             case 0 -> "INSERT INTO user (username, password, role) VALUES (?, ?, 'ADMIN')";
-            case 1 -> "INSERT INTO user (username, password, role) VALUES (?, ?, 'TEACHER')";
-            case 2 -> "INSERT INTO user (username, password, role) VALUES (?, ?, 'TEACHER')";
-            case 3 -> "INSERT INTO user (username, password, role) VALUES (?, ?, 'TEACHER')";    
-            default -> "INSERT INTO user (username, password, role) VALUES (?, ?, 'STUDENT')";
+            default -> "INSERT INTO user (username, password, role) VALUES (?, ?, 'TEACHER')";
         };
         
         
         PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
-        p.setString(1, data.getUserName());
-        p.setString(2, new String(data.getPassword()));
+        p.setString(1, data.getFullname());
+        p.setString(2, data.getProgram());
+        p.setString(3, data.getUserName());
+        p.setString(4, new String(data.getPassword()));
         p.executeUpdate();
         return true; 
     } catch (SQLException e) {
@@ -44,17 +41,17 @@ public class AddUser {
         return false; 
     }
     }
-    public ModelUser SignIn(ModelUser data){
+    public ModelFacultyUser SignIn(ModelFacultyUser data){
           try {
              
-              String sql = "SELECT * FROM user WHERE username LIKE ? AND password LIKE ?";
+              String sql = "SELECT * FROM facultyuser WHERE username LIKE ? AND password LIKE ?";
               PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
               p.setString(1, data.getUserName());
               p.setString(2, new String(data.getPassword()));
               ResultSet rs = p.executeQuery();
             if (rs.next()) {
                 
-                return new ModelUser(rs.getString("username"), rs.getString("password").toCharArray());
+                return new ModelFacultyUser(rs.getString("username"), rs.getString("password").toCharArray());
             } else {
                 
                 return null;
