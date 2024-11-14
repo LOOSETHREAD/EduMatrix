@@ -4,10 +4,9 @@
  */
 package Login;
 
-import Data.Models.ModelFacultyUser;
-import Data.Controller.AddUser;
-import java.awt.event.ActionListener;
 import Data.Controller.UserController;
+import Data.Models.ModelStudentUser;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -16,24 +15,21 @@ import javax.swing.JOptionPane;
  *
  * @author User
  */
-public class FacultyRegister extends javax.swing.JPanel {
+public class StudentRegister extends javax.swing.JPanel {
 
     /**
-     * Creates new form FacultyRegister
+     * Creates new form StudentRegister
      */
-    public ModelFacultyUser getUser() {
+        public ModelStudentUser getUser() {
         return user;
     }
-
-    private ModelFacultyUser user;
-    public FacultyRegister() {
+    private ModelStudentUser user;
+    public StudentRegister() {
         initComponents();
     }
-    
-    public void register() {
-        jLabel4.grabFocus();
+    public void addEventStudentRegister(ActionListener event) {
+        cmdBackLogin.addActionListener(event);
     }
-
     public void addEventBackLogin(ActionListener event) {
         cmdBackLogin.addActionListener(event);
     }
@@ -83,7 +79,7 @@ public class FacultyRegister extends javax.swing.JPanel {
                 cmdBackLoginActionPerformed(evt);
             }
         });
-        jPanel1.add(cmdBackLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 96, 30));
+        jPanel1.add(cmdBackLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 100, 30));
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -127,7 +123,7 @@ public class FacultyRegister extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,18 +133,22 @@ public class FacultyRegister extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmdBackLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBackLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmdBackLoginActionPerformed
+
     private void registerBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBttnActionPerformed
         // TODO add your handling code here:
-        String fullname = fullName.getText();
+         String fullname = fullName.getText();
         String program = (String) programBox.getSelectedItem();
         String username = txtUser.getText();
                     char[] password = txtPass.getPassword();
-                    user = new ModelFacultyUser(fullname,program,username, password);
+                    user = new ModelStudentUser(fullname,program, username, password);
                     UserController controller = new UserController();
         try {
-            controller.registerFacultyUser(user);
+            controller.registerStudentUser(user);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FacultyRegister.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StudentRegister.class.getName()).log(Level.SEVERE, null, ex);
         }
         JOptionPane.showMessageDialog(this, "User Added Successfully");
     }//GEN-LAST:event_registerBttnActionPerformed
@@ -156,10 +156,6 @@ public class FacultyRegister extends javax.swing.JPanel {
     private void fullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fullNameActionPerformed
-
-    private void cmdBackLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBackLoginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmdBackLoginActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

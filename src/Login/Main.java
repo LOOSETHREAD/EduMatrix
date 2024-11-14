@@ -18,23 +18,86 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-        FacultyLogin login = new FacultyLogin();
-        FacultyRegister register = new FacultyRegister();
+        FrontPage front = new FrontPage();
+        FacultyLogin facultyLogin = new FacultyLogin();
+        StudentLogin studentLogin = new StudentLogin();
+        FacultyRegister facultyRegister = new FacultyRegister();
+        StudentRegister studentRegister = new StudentRegister();
+
+        // Set animation speed
         slide.setAnimate(5);
-        slide.init(login, register);
-        login.addEventRegister(new ActionListener() {
+
+        // Initialize the slide panel with components in the specified order
+        slide.init(front, facultyLogin, studentLogin, facultyRegister, studentRegister);
+
+        // Action listeners to handle transitions based on button clicks
+
+        // Actions on FrontPage (com1)
+        front.addEventTeacherLogin(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                //  Show register form
-                slide.show(1);
-                register.register();
+                // Show FacultyLogin (com2)
+                slide.show(facultyLogin);
             }
         });
-        register.addEventBackLogin(new ActionListener() {
+
+        front.addEventStudentLogin(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                slide.show(0);
-                login.login();
+                // Show StudentLogin (com3)
+                slide.show(studentLogin);
+            }
+        });
+
+        // Actions on FacultyLogin (com2)
+        facultyLogin.addEventRegister(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                // Show FacultyRegister (com4)
+                slide.show(facultyRegister);
+            }
+        });
+
+        facultyLogin.addEventBack(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                // Return to FrontPage (com1)
+                slide.show(front);
+            }
+        });
+
+        // Actions on StudentLogin (com3)
+        studentLogin.addEventRegister(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                // Show StudentRegister (com5)
+                slide.show(studentRegister);
+            }
+        });
+
+        studentLogin.addEventBack(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                // Return to FrontPage (com1)
+                slide.show(front);
+            }
+        });
+
+        // Actions on FacultyRegister (com4)
+        facultyRegister.addEventBackLogin(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                // Return to FacultyLogin (com2)
+                slide.show(facultyLogin);
+            }
+        });
+
+        // Actions on StudentRegister (com5)
+        studentRegister.addEventBackLogin(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                // Return to StudentLogin (com3)
+                slide.show(studentLogin);
             }
         });
     }

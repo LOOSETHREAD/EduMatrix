@@ -1,6 +1,14 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Data.Models;
 
-public class ModelFacultyUser {
+/**
+ *
+ * @author User
+ */
+public class ModelStudentUser {
 
     /**
      * @return the fullname
@@ -30,54 +38,56 @@ public class ModelFacultyUser {
         this.program = program;
     }
 
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
-
-    public String getUserName() {
+    /**
+     * @return the username
+     */
+    public String getUsername() {
         return username;
     }
 
-    public void setUserName(String username) {
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * @return the password
+     */
     public char[] getPassword() {
         return password;
     }
 
+    /**
+     * @param password the password to set
+     */
     public void setPassword(char[] password) {
         this.password = password;
     }
 
-    public ModelFacultyUser(String fullname, String program, String username, char[] password) {
+//    public String getStatus() {
+//        return status;
+//    }
+
+//    public void setStatus(String status) {
+//        this.status = status;
+//    }
+
+    public ModelStudentUser(String fullname, String program, String username, char[] password) {
         this.fullname = fullname;
         this.program = program;
         this.username = username;
         this.password = password;
     }
-    
-    public ModelFacultyUser( String username, char[] password) {
-        
-//        this.fullname = fullname;
-//        this.program = program;
+
+    public ModelStudentUser(String username, char[] password) {
         this.username = username;
         this.password = password;
     }
-
-    public ModelFacultyUser() {
-    }
-        public enum UserRole {
-        ADMIN,
-        TEACHER
-    }
+    
     private String fullname;
     private String program;
     private String username;
     private char[] password;
-    private UserRole role;
 }

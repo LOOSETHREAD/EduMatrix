@@ -5,27 +5,8 @@ import Login.Main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.Timer;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import raven.glasspanepopup.GlassPanePopup;
-import StudentUI.studentDashboard;
-import StudentUI.studentReq;
-import StudentUI.studentblabla;
 
 /**
  *
@@ -76,7 +57,7 @@ public class Student extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         panelBorder1 = new Swing.PanelBorder();
         jLabel1 = new javax.swing.JLabel();
-        userName2 = new javax.swing.JLabel();
+        fullName2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         Btndash = new javax.swing.JButton();
         Btn1 = new javax.swing.JButton();
@@ -114,11 +95,10 @@ public class Student extends javax.swing.JFrame {
         panelBorder1.add(jLabel1);
         jLabel1.setBounds(17, 10, 30, 30);
 
-        userName2.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        userName2.setForeground(new java.awt.Color(51, 51, 51));
-        userName2.setText("Alfred Gabriel B. Baltazar");
-        panelBorder1.add(userName2);
-        userName2.setBounds(60, 10, 170, 30);
+        fullName2.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        fullName2.setForeground(new java.awt.Color(51, 51, 51));
+        panelBorder1.add(fullName2);
+        fullName2.setBounds(60, 10, 170, 30);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -380,6 +360,7 @@ public class Student extends javax.swing.JFrame {
     private javax.swing.JButton Btndash;
     private javax.swing.JPanel DASHBOARD;
     private javax.swing.JButton LogoutBtn;
+    public javax.swing.JLabel fullName2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -387,6 +368,5 @@ public class Student extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     public Swing.PanelBorder panelBorder1;
-    public javax.swing.JLabel userName2;
     // End of variables declaration//GEN-END:variables
 }

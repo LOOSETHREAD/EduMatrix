@@ -4,23 +4,7 @@ package TeacherUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.Timer;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import raven.glasspanepopup.GlassPanePopup;
 import Admin.adminDashboard;
 import Admin.adminReq;
@@ -77,7 +61,7 @@ public class Teacher extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         panelBorder1 = new Swing.PanelBorder();
         jLabel1 = new javax.swing.JLabel();
-        userName1 = new javax.swing.JLabel();
+        fullName1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         Btndash = new javax.swing.JButton();
         Btn1 = new javax.swing.JButton();
@@ -110,9 +94,9 @@ public class Teacher extends javax.swing.JFrame {
         panelBorder1.add(jLabel1);
         jLabel1.setBounds(10, 0, 38, 40);
 
-        userName1.setText("jLabel2");
-        panelBorder1.add(userName1);
-        userName1.setBounds(60, 20, 37, 16);
+        fullName1.setText("jLabel2");
+        panelBorder1.add(fullName1);
+        fullName1.setBounds(60, 20, 37, 16);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -305,11 +289,11 @@ public class Teacher extends javax.swing.JFrame {
     private javax.swing.JButton Btn2;
     private javax.swing.JButton Btndash;
     private javax.swing.JPanel DASHBOARD;
+    public javax.swing.JLabel fullName1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton logBtn;
     public Swing.PanelBorder panelBorder1;
-    public javax.swing.JLabel userName1;
     // End of variables declaration//GEN-END:variables
 }

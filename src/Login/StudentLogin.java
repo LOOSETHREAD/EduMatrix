@@ -4,39 +4,37 @@
  */
 package Login;
 
-import Admin.Admin;
 import Data.Controller.UserController;
 import Data.Models.ModelFacultyUser;
-import TeacherUI.Teacher;
+import StudentUI.Student;
 import java.awt.Component;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
+
 
 /**
  *
  * @author User
  */
-public class FacultyLogin extends javax.swing.JPanel {
+public class StudentLogin extends javax.swing.JPanel {
 
     /**
-     * Creates new form Login
+     * Creates new form StudentLogin
      */
-    public FacultyLogin() {
+    public StudentLogin() {
         initComponents();
     }
-    
-    public void login() {
-        txtUser.grabFocus();
-    }
-
-    public void addEventRegister(ActionListener event) {
-        cmdRegister.addActionListener(event);
+    public void addEventStudentLogin(ActionListener event) {
+        cmdStudentRegister.addActionListener(event);
     }
     public void addEventBack(ActionListener event) {
-        cmdBackFront.addActionListener(event);
+        cmdBack.addActionListener(event);
     }
+        public void addEventRegister(ActionListener event) {
+        cmdStudentRegister.addActionListener(event);
+    }
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,17 +44,16 @@ public class FacultyLogin extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        myTextField1 = new Swing.MyTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        cmdRegister = new javax.swing.JButton();
+        cmdStudentRegister = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtUser = new javax.swing.JTextField();
         loginBtn = new javax.swing.JButton();
         txtPass = new javax.swing.JPasswordField();
-        cmdBackFront = new javax.swing.JButton();
+        cmdBack = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(41, 78, 89));
         jPanel1.addInputMethodListener(new java.awt.event.InputMethodListener() {
@@ -75,14 +72,14 @@ public class FacultyLogin extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Password");
 
-        cmdRegister.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cmdRegister.setForeground(new java.awt.Color(255, 255, 255));
-        cmdRegister.setText("Sign up");
-        cmdRegister.setBorderPainted(false);
-        cmdRegister.setContentAreaFilled(false);
-        cmdRegister.addActionListener(new java.awt.event.ActionListener() {
+        cmdStudentRegister.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cmdStudentRegister.setForeground(new java.awt.Color(255, 255, 255));
+        cmdStudentRegister.setText("Sign up");
+        cmdStudentRegister.setBorderPainted(false);
+        cmdStudentRegister.setContentAreaFilled(false);
+        cmdStudentRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdRegisterActionPerformed(evt);
+                cmdStudentRegisterActionPerformed(evt);
             }
         });
 
@@ -102,14 +99,14 @@ public class FacultyLogin extends javax.swing.JPanel {
             }
         });
 
-        cmdBackFront.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cmdBackFront.setForeground(new java.awt.Color(255, 255, 255));
-        cmdBackFront.setText("Back");
-        cmdBackFront.setBorderPainted(false);
-        cmdBackFront.setContentAreaFilled(false);
-        cmdBackFront.addActionListener(new java.awt.event.ActionListener() {
+        cmdBack.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cmdBack.setForeground(new java.awt.Color(255, 255, 255));
+        cmdBack.setText("Back");
+        cmdBack.setBorderPainted(false);
+        cmdBack.setContentAreaFilled(false);
+        cmdBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdBackFrontActionPerformed(evt);
+                cmdBackActionPerformed(evt);
             }
         });
 
@@ -130,7 +127,7 @@ public class FacultyLogin extends javax.swing.JPanel {
                                         .addComponent(jLabel5)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addGap(170, 170, 170)
-                                            .addComponent(cmdRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(cmdStudentRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addGap(3, 3, 3)
                                             .addComponent(jLabel4))))
@@ -146,23 +143,22 @@ public class FacultyLogin extends javax.swing.JPanel {
                             .addGap(17, 17, 17)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(cmdBackFront, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmdBack, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(53, 53, 53))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cmdBackFront, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
+                .addGap(14, 14, 14)
+                .addComponent(cmdBack, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(43, 43, 43)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(cmdRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel4))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmdStudentRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(30, 30, 30)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -188,9 +184,9 @@ public class FacultyLogin extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPanel1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jPanel1InputMethodTextChanged
+    private void cmdStudentRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdStudentRegisterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel1InputMethodTextChanged
+    }//GEN-LAST:event_cmdStudentRegisterActionPerformed
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
@@ -201,51 +197,35 @@ public class FacultyLogin extends javax.swing.JPanel {
                         ModelFacultyUser loggedInUser = controller.LogInFaculty(loginUser);
 
                         if (loggedInUser != null) {
-            try {
-                boolean isAdmin = controller.isAdmin(loggedInUser);
-                if (isAdmin) {
-                    Component topLevelContainer = FacultyLogin.this.getTopLevelAncestor();
-                    if (topLevelContainer instanceof JFrame jFrame) {
-                        jFrame.setVisible(false);
-                    }
-                    Admin adminInterface = new Admin();
-                    adminInterface.setVisible(true);
-                }
-                else{
-                    Component topLevelContainer = FacultyLogin.this.getTopLevelAncestor();
-                    if (topLevelContainer instanceof JFrame jFrame) {
-                        jFrame.setVisible(false);
-                    }
-                    Teacher teacherUI = new Teacher();
+                            Component topLevelContainer = StudentLogin.this.getTopLevelAncestor();
+                            if (topLevelContainer instanceof JFrame) {
+                                ((JFrame) topLevelContainer).setVisible(false);
+                            }
+                            Student student = new Student();
                     String fullnameData =  loggedInUser.getFullname();
-                    teacherUI.fullName1.setText(fullnameData);
-                    teacherUI.setVisible(true);
-                }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(FacultyLogin.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                    student.fullName2.setText(fullnameData);
+                    student.setVisible(true);
                         }
     }//GEN-LAST:event_loginBtnActionPerformed
 
-    private void cmdRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdRegisterActionPerformed
+    private void jPanel1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jPanel1InputMethodTextChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_cmdRegisterActionPerformed
+    }//GEN-LAST:event_jPanel1InputMethodTextChanged
 
-    private void cmdBackFrontActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBackFrontActionPerformed
+    private void cmdBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBackActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cmdBackFrontActionPerformed
+    }//GEN-LAST:event_cmdBackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cmdBackFront;
-    private javax.swing.JButton cmdRegister;
+    private javax.swing.JButton cmdBack;
+    private javax.swing.JButton cmdStudentRegister;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loginBtn;
-    private Swing.MyTextField myTextField1;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
