@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -194,37 +195,43 @@ public class FacultyLogin extends javax.swing.JPanel {
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
-        String username = txtUser.getText();
-                    char[] password = txtPass.getPassword();
-        ModelFacultyUser loginUser = new ModelFacultyUser(username, password);
-                        UserController controller = new UserController();
-                        ModelFacultyUser loggedInUser = controller.LogInFaculty(loginUser);
+String username = txtUser.getText();
+char[] password = txtPass.getPassword();
+ModelFacultyUser loginUser = new ModelFacultyUser(username, password);
+UserController controller = new UserController();
 
-                        if (loggedInUser != null) {
-            try {
-                boolean isAdmin = controller.isAdmin(loggedInUser);
-                if (isAdmin) {
-                    Component topLevelContainer = FacultyLogin.this.getTopLevelAncestor();
-                    if (topLevelContainer instanceof JFrame jFrame) {
-                        jFrame.setVisible(false);
-                    }
-                    Admin adminInterface = new Admin();
-                    adminInterface.setVisible(true);
-                }
-                else{
-                    Component topLevelContainer = FacultyLogin.this.getTopLevelAncestor();
-                    if (topLevelContainer instanceof JFrame jFrame) {
-                        jFrame.setVisible(false);
-                    }
-                    Teacher teacherUI = new Teacher();
-                    String fullnameData =  loggedInUser.getFullname();
-                    teacherUI.fullName1.setText(fullnameData);
-                    teacherUI.setVisible(true);
-                }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(FacultyLogin.class.getName()).log(Level.SEVERE, null, ex);
+try {
+    ModelFacultyUser loggedInUser = controller.LogInFaculty(loginUser);
+    
+    if (loggedInUser != null) {
+        boolean isAdmin = controller.isAdmin(loggedInUser);
+        Component topLevelContainer = FacultyLogin.this.getTopLevelAncestor();
+        
+        // Hide the current JFrame if it's a top-level container
+        if (topLevelContainer instanceof JFrame jFrame) {
+            jFrame.setVisible(false);
+        }
+
+        if (isAdmin) {
+            Admin adminInterface = new Admin();
+            adminInterface.setVisible(true);
+        } else {
+            Teacher teacherUI = new Teacher();
+            String fullnameData = loggedInUser.getFullname();
+            if (fullnameData != null) {
+                teacherUI.fullName1.setText(fullnameData);
             }
-                        }
+            teacherUI.setVisible(true);
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Login failed. Invalid username or password.");
+    }
+} catch (ClassNotFoundException ex) {
+    Logger.getLogger(FacultyLogin.class.getName()).log(Level.SEVERE, null, ex);
+} catch (Exception ex) {
+    Logger.getLogger(FacultyLogin.class.getName()).log(Level.SEVERE, "Unexpected error during login", ex);
+}
+
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void cmdRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdRegisterActionPerformed

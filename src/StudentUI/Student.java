@@ -56,7 +56,6 @@ public class Student extends javax.swing.JFrame {
         DASHBOARD = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         panelBorder1 = new Swing.PanelBorder();
-        jLabel1 = new javax.swing.JLabel();
         fullName2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         Btndash = new javax.swing.JButton();
@@ -89,16 +88,10 @@ public class Student extends javax.swing.JFrame {
 
         panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setBackground(new java.awt.Color(41, 78, 89));
-        jLabel1.setText("jLabel1");
-        jLabel1.setOpaque(true);
-        panelBorder1.add(jLabel1);
-        jLabel1.setBounds(17, 10, 30, 30);
-
-        fullName2.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        fullName2.setForeground(new java.awt.Color(51, 51, 51));
+        fullName2.setBackground(new java.awt.Color(41, 78, 89));
+        fullName2.setOpaque(true);
         panelBorder1.add(fullName2);
-        fullName2.setBounds(60, 10, 170, 30);
+        fullName2.setBounds(40, 10, 160, 30);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -361,7 +354,6 @@ public class Student extends javax.swing.JFrame {
     private javax.swing.JPanel DASHBOARD;
     private javax.swing.JButton LogoutBtn;
     public javax.swing.JLabel fullName2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

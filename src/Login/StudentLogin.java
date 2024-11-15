@@ -6,10 +6,14 @@ package Login;
 
 import Data.Controller.UserController;
 import Data.Models.ModelFacultyUser;
+import Data.Models.ModelStudentUser;
 import StudentUI.Student;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -191,21 +195,34 @@ public class StudentLogin extends javax.swing.JPanel {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
         String username = txtUser.getText();
-                    char[] password = txtPass.getPassword();
-        ModelFacultyUser loginUser = new ModelFacultyUser(username, password);
-                        UserController controller = new UserController();
-                        ModelFacultyUser loggedInUser = controller.LogInFaculty(loginUser);
+char[] password = txtPass.getPassword();
+ModelStudentUser loginUser = new ModelStudentUser(username, password);
+UserController controller = new UserController();
 
-                        if (loggedInUser != null) {
-                            Component topLevelContainer = StudentLogin.this.getTopLevelAncestor();
-                            if (topLevelContainer instanceof JFrame) {
-                                ((JFrame) topLevelContainer).setVisible(false);
-                            }
-                            Student student = new Student();
-                    String fullnameData =  loggedInUser.getFullname();
-                    student.fullName2.setText(fullnameData);
-                    student.setVisible(true);
-                        }
+try {
+    ModelStudentUser loggedInUser = controller.LogInStudent(loginUser);
+
+    if (loggedInUser != null) {
+        // Hide the current JFrame if it exists
+        Component topLevelContainer = StudentLogin.this.getTopLevelAncestor();
+        if (topLevelContainer instanceof JFrame jFrame) {
+            jFrame.setVisible(false);
+        }
+
+        // Initialize the Student UI and set full name if available
+        Student student = new Student();
+        String fullnameData = loggedInUser.getFullname();
+        if (fullnameData != null) {
+            student.fullName2.setText(fullnameData);
+        }
+        student.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(null, "Login failed. Invalid username or password.");
+    }
+} catch (Exception ex) {
+    Logger.getLogger(StudentLogin.class.getName()).log(Level.SEVERE, "Unexpected error during login", ex);
+}
+
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void jPanel1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jPanel1InputMethodTextChanged
