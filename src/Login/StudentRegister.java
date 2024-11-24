@@ -139,18 +139,36 @@ public class StudentRegister extends javax.swing.JPanel {
 
     private void registerBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBttnActionPerformed
         // TODO add your handling code here:
-         String fullname = fullName.getText();
-        String program = (String) programBox.getSelectedItem();
-        String username = txtUser.getText();
-                    char[] password = txtPass.getPassword();
-                    user = new ModelStudentUser(fullname,program, username, password);
-                    UserController controller = new UserController();
-        try {
-            controller.registerStudentUser(user);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(StudentRegister.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        JOptionPane.showMessageDialog(this, "User Added Successfully");
+       String fullname = fullName.getText();
+String program = (String) programBox.getSelectedItem();
+String username = txtUser.getText();
+char[] password = txtPass.getPassword();
+
+// Generate a unique student ID
+UserController controller = new UserController();
+String studentid = controller.generateStudentId();
+
+// Set default status for a new user
+String status;
+if (/* condition to check if the teacher verified */ false) {
+    status = "verified"; // Verified by teacher
+} else {
+    status = "not verified"; // Default for new users
+}
+
+// Create the user object with the generated student ID
+ModelStudentUser user = new ModelStudentUser(fullname, program, username, password, status, studentid);
+
+// Register the user
+try {
+    controller.registerStudentUser(user);
+    JOptionPane.showMessageDialog(this, "User Added Successfully with ID: " + studentid + " : " + status);
+} catch (ClassNotFoundException ex) {
+    Logger.getLogger(StudentRegister.class.getName()).log(Level.SEVERE, null, ex);
+    JOptionPane.showMessageDialog(this, "Failed to add user. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+}
+
+
     }//GEN-LAST:event_registerBttnActionPerformed
 
     private void fullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullNameActionPerformed

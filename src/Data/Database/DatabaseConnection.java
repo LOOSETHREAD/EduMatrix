@@ -8,11 +8,6 @@ public class DatabaseConnection {
     private static volatile DatabaseConnection instance;
     private Connection connection;
 
-//    private static final String SERVER = "192.168.133.150";
-//    private static final String PORT = "3306";
-//    private static final String DATABASE = "cookhub";
-//    private static final String USER = "cookhub";
-//    private static final String PASSWORD = "cookhub@123";
     private static final String SERVER = "127.0.0.1";
     private static final String PORT = "3306";
     private static final String DATABASE = "edumatrix";
@@ -39,12 +34,23 @@ public class DatabaseConnection {
     }
 
     private void connectToDatabase() throws SQLException, ClassNotFoundException {
+        // Load the MySQL JDBC Driver
         Class.forName("com.mysql.cj.jdbc.Driver");
+
+        // Establish a new connection
         connection = DriverManager.getConnection(
                 "jdbc:mysql://" + SERVER + ":" + PORT + "/" + DATABASE, USER, PASSWORD);
     }
 
-    public Connection getConnection() {
+    public synchronized Connection getConnection() {
+        try {
+            // Check if the connection is valid (timeout = 2 seconds)
+            if (connection == null || connection.isClosed() || !connection.isValid(2)) {
+                connectToDatabase(); // Reconnect if the connection is invalid
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return connection;
     }
 }

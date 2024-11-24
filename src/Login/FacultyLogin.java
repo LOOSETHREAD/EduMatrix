@@ -5,9 +5,11 @@
 package Login;
 
 import Admin.Admin;
+import static Data.Controller.PopulateTable.getTeacherIDForLoggedInUser;
 import Data.Controller.UserController;
 import Data.Models.ModelFacultyUser;
 import TeacherUI.Teacher;
+import TeacherUI.TeacherAddCourse;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
@@ -195,42 +197,64 @@ public class FacultyLogin extends javax.swing.JPanel {
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
-String username = txtUser.getText();
-char[] password = txtPass.getPassword();
-ModelFacultyUser loginUser = new ModelFacultyUser(username, password);
-UserController controller = new UserController();
+    // Get the username and password from the login form
+    String username = txtUser.getText();
+    char[] password = txtPass.getPassword();
 
-try {
-    ModelFacultyUser loggedInUser = controller.LogInFaculty(loginUser);
-    
-    if (loggedInUser != null) {
-        boolean isAdmin = controller.isAdmin(loggedInUser);
-        Component topLevelContainer = FacultyLogin.this.getTopLevelAncestor();
-        
-        // Hide the current JFrame if it's a top-level container
-        if (topLevelContainer instanceof JFrame jFrame) {
-            jFrame.setVisible(false);
-        }
+    // Create a faculty user object for login
+    ModelFacultyUser loginUser = new ModelFacultyUser(username, password, "", "", "");
+    UserController controller = new UserController();
 
-        if (isAdmin) {
-            Admin adminInterface = new Admin();
-            adminInterface.setVisible(true);
-        } else {
-            Teacher teacherUI = new Teacher();
-            String fullnameData = loggedInUser.getFullname();
-            if (fullnameData != null) {
-                teacherUI.fullName1.setText(fullnameData);
+    try {
+        // Attempt to log in the user
+        ModelFacultyUser loggedInUser = controller.LogInFaculty(loginUser);
+
+        if (loggedInUser != null) {
+            String status = loggedInUser.getStatus(); // Retrieve the user's status
+            Component topLevelContainer = FacultyLogin.this.getTopLevelAncestor();
+
+            // Hide the current JFrame if it's a top-level container
+            if (topLevelContainer instanceof JFrame jFrame) {
+                jFrame.setVisible(false);
             }
-            teacherUI.setVisible(true);
+
+            if ("ADMIN".equalsIgnoreCase(status)) {
+                // If the user is an admin, open the Admin panel
+                Admin adminInterface = new Admin();
+                adminInterface.setVisible(true);
+            } else if ("verified".equalsIgnoreCase(status)) {
+                // If the user is verified, open the Teacher panel
+                Teacher teacherUI = new Teacher();
+                String fullnameData = loggedInUser.getFullname();
+
+                // Fetch the teacher ID for the logged-in user using the helper method
+                String teacherID = getTeacherIDForLoggedInUser(username); // Call the method here
+
+                // If the teacher ID was successfully retrieved, update the UI in TeacherUI
+                if (teacherID != null) {
+                    teacherUI.teacherID.setText(teacherID); // Set the teacherID in TeacherUI
+                } else {
+                    teacherUI.teacherID.setText("No Teacher ID found.");
+                }
+                teacherUI.fullName1.setText(fullnameData);
+                teacherUI.setVisible(true);
+            } else {
+                // If the user is not verified, show an error message
+                JOptionPane.showMessageDialog(this, "Access denied. Your account is not verified.", "Access Denied", JOptionPane.ERROR_MESSAGE);
+
+                // Show the login window again
+                if (topLevelContainer instanceof JFrame jFrame) {
+                    jFrame.setVisible(true);
+                }
+            }
+        } else {
+            // If login failed, show an error message
+            JOptionPane.showMessageDialog(null, "Login failed. Invalid username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
-    } else {
-        JOptionPane.showMessageDialog(null, "Login failed. Invalid username or password.");
+    } catch (Exception ex) {
+        Logger.getLogger(FacultyLogin.class.getName()).log(Level.SEVERE, "Unexpected error during login", ex);
+        JOptionPane.showMessageDialog(this, "An unexpected error occurred. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
     }
-} catch (ClassNotFoundException ex) {
-    Logger.getLogger(FacultyLogin.class.getName()).log(Level.SEVERE, null, ex);
-} catch (Exception ex) {
-    Logger.getLogger(FacultyLogin.class.getName()).log(Level.SEVERE, "Unexpected error during login", ex);
-}
 
     }//GEN-LAST:event_loginBtnActionPerformed
 

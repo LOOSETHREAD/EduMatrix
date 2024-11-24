@@ -1,8 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package Admin;
+
+import static Data.Controller.PopulateTable.populateTeacherTable;
+import Data.Database.DatabaseConnection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -10,13 +12,18 @@ package Admin;
  */
 public class VerifyTeacher extends javax.swing.JPanel {
 
-    /**
-     * Creates new form adminTeacher
-     */
+   
+    private DefaultTableModel teacherReqTableModel;
     public VerifyTeacher() {
         initComponents();
+        teacherReqTableModel = (DefaultTableModel) teacherReqTable.getModel();
+        populateTeacherTable( teacherReqTable);
     }
-
+    public void TextFieldEmpty(){
+        fullName.setText("");
+        program.setText("");
+        status.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,53 +34,84 @@ public class VerifyTeacher extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        teacherReqTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        confirmBtn = new javax.swing.JButton();
+        fullName = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
+        program = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        declineBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        teacherReqTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Full Name", "Program", "Role", "Status", "teacher ID"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false
+            };
 
-        jButton1.setText("Confirm");
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        teacherReqTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                teacherReqTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(teacherReqTable);
+        if (teacherReqTable.getColumnModel().getColumnCount() > 0) {
+            teacherReqTable.getColumnModel().getColumn(0).setResizable(false);
+            teacherReqTable.getColumnModel().getColumn(1).setResizable(false);
+            teacherReqTable.getColumnModel().getColumn(2).setMinWidth(0);
+            teacherReqTable.getColumnModel().getColumn(2).setPreferredWidth(0);
+            teacherReqTable.getColumnModel().getColumn(2).setMaxWidth(0);
+            teacherReqTable.getColumnModel().getColumn(3).setResizable(false);
+            teacherReqTable.getColumnModel().getColumn(4).setMinWidth(0);
+            teacherReqTable.getColumnModel().getColumn(4).setPreferredWidth(0);
+            teacherReqTable.getColumnModel().getColumn(4).setMaxWidth(0);
+        }
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("jLabel1");
-        jLabel1.setOpaque(true);
+        confirmBtn.setText("Confirm");
+        confirmBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmBtnActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("jLabel1");
-        jLabel2.setOpaque(true);
+        fullName.setBackground(new java.awt.Color(255, 255, 255));
+        fullName.setOpaque(true);
 
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("jLabel1");
-        jLabel3.setOpaque(true);
+        status.setBackground(new java.awt.Color(255, 255, 255));
+        status.setOpaque(true);
+
+        program.setBackground(new java.awt.Color(255, 255, 255));
+        program.setOpaque(true);
 
         jLabel4.setText("Name");
 
-        jLabel5.setText("Subject");
+        jLabel5.setText("Program");
 
-        jLabel6.setText("Gender");
+        jLabel6.setText("Status");
 
-        jButton3.setText("Decline");
+        declineBtn.setText("Decline");
+        declineBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                declineBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -91,16 +129,16 @@ public class VerifyTeacher extends javax.swing.JPanel {
                         .addGap(176, 176, 176))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(program, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fullName, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(103, 103, 103))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(170, 170, 170)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(73, 73, 73)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -112,16 +150,16 @@ public class VerifyTeacher extends javax.swing.JPanel {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fullName, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(program, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28))
         );
 
@@ -147,18 +185,111 @@ public class VerifyTeacher extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void teacherReqTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_teacherReqTableMouseClicked
+        // TODO add your handling code here:
+        int selectIndex = teacherReqTable.getSelectedRow();
+        fullName.setText(teacherReqTableModel.getValueAt(selectIndex, 0).toString());
+        program.setText(teacherReqTableModel.getValueAt(selectIndex, 1).toString());
+        status.setText(teacherReqTableModel.getValueAt(selectIndex, 3).toString());
+    }//GEN-LAST:event_teacherReqTableMouseClicked
+
+    private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = teacherReqTable.getSelectedRow();
+if (selectedRow == -1) {
+    JOptionPane.showMessageDialog(this, "Please select a teacher to confirm.", "No Selection", JOptionPane.WARNING_MESSAGE);
+    return;
+}
+
+try {
+    // Extract student details from the selected row
+    String fullName = teacherReqTableModel.getValueAt(selectedRow, 0).toString();
+    String program = teacherReqTableModel.getValueAt(selectedRow, 1).toString();
+
+    // Prepare the SQL statement for updating the status
+    String sql = "UPDATE facultyuser SET status = 'verified' WHERE fullname = ? AND program = ?";
+
+    // Use the singleton instance of DatabaseConnection
+    DatabaseConnection dbConnection = DatabaseConnection.getInstance();
+    try (PreparedStatement pstmt = dbConnection.getConnection().prepareStatement(sql)) {
+        // Set parameters for the query
+        pstmt.setString(1, fullName);
+        pstmt.setString(2, program);
+
+        // Execute the update
+        int rowsUpdated = pstmt.executeUpdate();
+
+        if (rowsUpdated > 0) {
+            // Update the UI to reflect the changes
+            teacherReqTableModel.removeRow(selectedRow);
+            JOptionPane.showMessageDialog(this, "Teacher has been verified successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to verify the teacher. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        TextFieldEmpty();
+    }
+} catch (Exception ex) {
+    // Log the exception and notify the user
+    ex.printStackTrace();
+    JOptionPane.showMessageDialog(this, "An error occurred while verifying the teacher.", "Error", JOptionPane.ERROR_MESSAGE);
+}
+
+    }//GEN-LAST:event_confirmBtnActionPerformed
+
+    private void declineBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = teacherReqTable.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a teacher to decline.", "No Selection", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Extract teacher details from the selected row
+    String fullName = teacherReqTableModel.getValueAt(selectedRow, 0).toString();
+    String program = teacherReqTableModel.getValueAt(selectedRow, 1).toString();
+
+    try {
+        // SQL query to delete the teacher from the database
+        String sql = "DELETE FROM facultyuser WHERE fullname = ? AND program = ?";
+
+        // Use the singleton instance of DatabaseConnection
+        DatabaseConnection dbConnection = DatabaseConnection.getInstance();
+        try (PreparedStatement pstmt = dbConnection.getConnection().prepareStatement(sql)) {
+            // Set parameters for the query
+            pstmt.setString(1, fullName);
+            pstmt.setString(2, program);
+
+            // Execute the delete operation
+            int rowsDeleted = pstmt.executeUpdate();
+
+            if (rowsDeleted > 0) {
+                // Update the UI to remove the row
+                teacherReqTableModel.removeRow(selectedRow);
+                JOptionPane.showMessageDialog(this, "Teacher request has been declined and removed.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to decline the teacher request. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            TextFieldEmpty();
+        }
+    } catch (Exception ex) {
+        // Log the exception and notify the user
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "An error occurred while declining the teacher request.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_declineBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton confirmBtn;
+    private javax.swing.JButton declineBtn;
+    private javax.swing.JLabel fullName;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel program;
+    private javax.swing.JLabel status;
+    private javax.swing.JTable teacherReqTable;
     // End of variables declaration//GEN-END:variables
 }

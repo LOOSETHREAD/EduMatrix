@@ -16,6 +16,7 @@ public class studentDashboard extends javax.swing.JPanel {
      */
     public studentDashboard() {
         initComponents();
+        
     }
 
     /**

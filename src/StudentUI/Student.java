@@ -65,6 +65,8 @@ public class Student extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         LogoutBtn = new javax.swing.JButton();
+        LogoutBtn1 = new javax.swing.JButton();
+        LogoutBtn3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -76,11 +78,11 @@ public class Student extends javax.swing.JFrame {
         DASHBOARD.setLayout(DASHBOARDLayout);
         DASHBOARDLayout.setHorizontalGroup(
             DASHBOARDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
+            .addGap(0, 737, Short.MAX_VALUE)
         );
         DASHBOARDLayout.setVerticalGroup(
             DASHBOARDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 805, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jPanel1.setBackground(new java.awt.Color(41, 78, 89));
@@ -89,6 +91,7 @@ public class Student extends javax.swing.JFrame {
         panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
 
         fullName2.setBackground(new java.awt.Color(41, 78, 89));
+        fullName2.setForeground(new java.awt.Color(255, 255, 255));
         fullName2.setOpaque(true);
         panelBorder1.add(fullName2);
         fullName2.setBounds(40, 10, 160, 30);
@@ -128,7 +131,7 @@ public class Student extends javax.swing.JFrame {
         Btn1.setBackground(new java.awt.Color(0, 102, 102));
         Btn1.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         Btn1.setForeground(new java.awt.Color(255, 255, 255));
-        Btn1.setText("Verify Requests");
+        Btn1.setText("Enter Class");
         Btn1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Btn1.setBorderPainted(false);
         Btn1.setContentAreaFilled(false);
@@ -141,7 +144,7 @@ public class Student extends javax.swing.JFrame {
         Btn2.setBackground(new java.awt.Color(0, 102, 102));
         Btn2.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         Btn2.setForeground(new java.awt.Color(255, 255, 255));
-        Btn2.setText("Verify Teachers");
+        Btn2.setText("Exam Result");
         Btn2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Btn2.setBorderPainted(false);
         Btn2.setContentAreaFilled(false);
@@ -172,20 +175,51 @@ public class Student extends javax.swing.JFrame {
             }
         });
 
+        LogoutBtn1.setBackground(new java.awt.Color(0, 102, 102));
+        LogoutBtn1.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        LogoutBtn1.setForeground(new java.awt.Color(255, 255, 255));
+        LogoutBtn1.setText("SPR");
+        LogoutBtn1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        LogoutBtn1.setBorderPainted(false);
+        LogoutBtn1.setContentAreaFilled(false);
+        LogoutBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogoutBtn1ActionPerformed(evt);
+            }
+        });
+
+        LogoutBtn3.setBackground(new java.awt.Color(0, 102, 102));
+        LogoutBtn3.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        LogoutBtn3.setForeground(new java.awt.Color(255, 255, 255));
+        LogoutBtn3.setText("Quiz Result");
+        LogoutBtn3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        LogoutBtn3.setBorderPainted(false);
+        LogoutBtn3.setContentAreaFilled(false);
+        LogoutBtn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogoutBtn3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(Btndash, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(Btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(Btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(LogoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Btndash, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(LogoutBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LogoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LogoutBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 4, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,12 +234,17 @@ public class Student extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Btndash, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(Btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addGap(4, 4, 4)
+                .addComponent(LogoutBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(LogoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(Btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(LogoutBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(LogoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -216,7 +255,7 @@ public class Student extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(DASHBOARD, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                    .addComponent(DASHBOARD, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -249,6 +288,15 @@ public class Student extends javax.swing.JFrame {
         main.setVisible(true);
         dispose();
     }//GEN-LAST:event_LogoutBtnActionPerformed
+
+    private void LogoutBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutBtn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LogoutBtn1ActionPerformed
+
+    private void LogoutBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutBtn3ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_LogoutBtn3ActionPerformed
 
 
    
@@ -353,6 +401,8 @@ public class Student extends javax.swing.JFrame {
     private javax.swing.JButton Btndash;
     private javax.swing.JPanel DASHBOARD;
     private javax.swing.JButton LogoutBtn;
+    private javax.swing.JButton LogoutBtn1;
+    private javax.swing.JButton LogoutBtn3;
     public javax.swing.JLabel fullName2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

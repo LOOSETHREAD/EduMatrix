@@ -8,6 +8,7 @@ import Data.Models.ModelFacultyUser;
 import Data.Controller.AddUser;
 import java.awt.event.ActionListener;
 import Data.Controller.UserController;
+import Data.Models.ModelStudentUser;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -139,18 +140,40 @@ public class FacultyRegister extends javax.swing.JPanel {
 
     private void registerBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBttnActionPerformed
         // TODO add your handling code here:
-        String fullname = fullName.getText();
-        String program = (String) programBox.getSelectedItem();
-        String username = txtUser.getText();
-                    char[] password = txtPass.getPassword();
-                    user = new ModelFacultyUser(fullname,program,username, password);
-                    UserController controller = new UserController();
-        try {
-            controller.registerFacultyUser(user);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FacultyRegister.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        JOptionPane.showMessageDialog(this, "User Added Successfully");
+       String fullname = fullName.getText();
+String program = (String) programBox.getSelectedItem();
+String username = txtUser.getText();
+char[] password = txtPass.getPassword();
+UserController controller = new UserController();
+String teacherid = controller.generateTeacherId();
+// Initialize default status for the user
+String status = "not verified";
+
+try {
+    // Check if an ADMIN already exists in the database
+    boolean isAdminExists = controller.isAdminExists();
+    
+    if (!isAdminExists) {
+        // If no ADMIN exists, set the status to "ADMIN"
+        status = "ADMIN";
+    }
+
+    // Create the user object with the collected data and determined status
+    ModelFacultyUser user = new ModelFacultyUser(fullname, program, username, password, status, teacherid);
+
+    // Attempt to register the user
+    controller.registerFacultyUser(user);
+
+    // Inform the user about successful registration and their assigned status
+    JOptionPane.showMessageDialog(this, "User Added Successfully with ID: " + teacherid + " : " + status);
+} catch (ClassNotFoundException ex) {
+    Logger.getLogger(FacultyRegister.class.getName()).log(Level.SEVERE, null, ex);
+    JOptionPane.showMessageDialog(this, "Failed to add user. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+} catch (Exception ex) {
+    Logger.getLogger(FacultyRegister.class.getName()).log(Level.SEVERE, "Unexpected error", ex);
+    JOptionPane.showMessageDialog(this, "An unexpected error occurred. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+}
+
     }//GEN-LAST:event_registerBttnActionPerformed
 
     private void fullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullNameActionPerformed

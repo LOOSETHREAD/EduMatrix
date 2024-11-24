@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 
 
 /**
@@ -194,33 +195,49 @@ public class StudentLogin extends javax.swing.JPanel {
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
-        String username = txtUser.getText();
+String username = txtUser.getText();
 char[] password = txtPass.getPassword();
-ModelStudentUser loginUser = new ModelStudentUser(username, password);
+
+// Validate input
+if (username == null || username.trim().isEmpty() || password == null || password.length == 0) {
+    JOptionPane.showMessageDialog(this, "Please fill in both username and password.", "Input Error", JOptionPane.WARNING_MESSAGE);
+    return;
+}
+
+// Create a user model
+ModelStudentUser loginUser = new ModelStudentUser(username, password, "", "");
+
 UserController controller = new UserController();
 
 try {
+    // Attempt login and retrieve user details
     ModelStudentUser loggedInUser = controller.LogInStudent(loginUser);
 
     if (loggedInUser != null) {
-        // Hide the current JFrame if it exists
-        Component topLevelContainer = StudentLogin.this.getTopLevelAncestor();
-        if (topLevelContainer instanceof JFrame jFrame) {
-            jFrame.setVisible(false);
-        }
+        // Check if the user is verified
+        if ("verified".equalsIgnoreCase(loggedInUser.getStatus())) {
+            // Launch the student UI
+            Student studentPanel = new Student();
+            studentPanel.fullName2.setText(loggedInUser.getFullname());
+            studentPanel.setVisible(true);
 
-        // Initialize the Student UI and set full name if available
-        Student student = new Student();
-        String fullnameData = loggedInUser.getFullname();
-        if (fullnameData != null) {
-            student.fullName2.setText(fullnameData);
+            // Close the current login window
+            Component topLevelContainer = SwingUtilities.getWindowAncestor(this);
+            if (topLevelContainer instanceof JFrame frame) {
+                frame.setVisible(false);
+            }
+        } else {
+            // Deny access for unverified users
+            JOptionPane.showMessageDialog(this, "Access denied. Your account is not verified.", "Access Denied", JOptionPane.ERROR_MESSAGE);
         }
-        student.setVisible(true);
     } else {
-        JOptionPane.showMessageDialog(null, "Login failed. Invalid username or password.");
+        // Invalid credentials
+        JOptionPane.showMessageDialog(this, "Login failed. Invalid username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
     }
 } catch (Exception ex) {
+    // Handle unexpected errors
     Logger.getLogger(StudentLogin.class.getName()).log(Level.SEVERE, "Unexpected error during login", ex);
+    JOptionPane.showMessageDialog(this, "An unexpected error occurred. Please try again later.", "Error", JOptionPane.ERROR_MESSAGE);
 }
 
     }//GEN-LAST:event_loginBtnActionPerformed

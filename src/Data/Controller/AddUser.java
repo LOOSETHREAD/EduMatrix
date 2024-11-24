@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import Data.Models.ModelFacultyUser;
 import Data.Database.DatabaseConnection;
 import Data.Models.ModelStudentUser;
+import com.sun.jdi.connect.spi.Connection;
 
 
 
@@ -25,8 +26,8 @@ public class AddUser {
         
         String sql;
         sql = switch (rowCount) {
-            case 0 -> "INSERT INTO facultyuser (fullname, program, username, password, role) VALUES (?, ?, ?, ?, 'ADMIN')";
-            default -> "INSERT INTO facultyuser (fullname, program, username, password, role) VALUES (?, ?, ?, ?, 'TEACHER')";
+            case 0 -> "INSERT INTO facultyuser (fullname, program, username, password, role, status, teacherid) VALUES (?, ?, ?, ?, 'ADMIN', ?, ?)";
+            default -> "INSERT INTO facultyuser (fullname, program, username, password, role, status, teacherid) VALUES (?, ?, ?, ?, 'TEACHER', ?, ?)";
         };
         
         
@@ -35,6 +36,8 @@ public class AddUser {
         p.setString(2, data.getProgram());
         p.setString(3, data.getUserName());
         p.setString(4, new String(data.getPassword()));
+        p.setString(5, data.getStatus());
+        p.setString(6, data.getTeacherid());
         p.executeUpdate();
         return true; 
     } catch (SQLException e) {
@@ -52,7 +55,7 @@ public class AddUser {
               ResultSet rs = p.executeQuery();
             if (rs.next()) {
                 
-                return new ModelFacultyUser(rs.getString("username"), rs.getString("password").toCharArray());
+                return new ModelFacultyUser(rs.getString("username"), rs.getString("password").toCharArray(), rs.getString("fullname"), rs.getString("status"),rs.getString("teacherid"));
             } else {
                 
                 return null;
@@ -75,7 +78,7 @@ public class AddUser {
         
         String sql;
         sql = switch (rowCount) {
-            default -> "INSERT INTO studentuser (fullname, program, username, password) VALUES (?, ?, ?, ?)";
+            default -> "INSERT INTO studentuser (fullname, program, username, password, status, studentid) VALUES (?, ?, ?, ?, ?, ?)";
         };
         
         
@@ -84,6 +87,8 @@ public class AddUser {
         p.setString(2, data.getProgram());
         p.setString(3, data.getUsername());
         p.setString(4, new String(data.getPassword()));
+        p.setString(5,  data.getStatus()); 
+        p.setString(6, data.getStudentid());
         p.executeUpdate();
         return true; 
     } catch (SQLException e) {
@@ -101,7 +106,7 @@ public class AddUser {
               ResultSet rs = p.executeQuery();
             if (rs.next()) {
                 
-                return new ModelStudentUser(rs.getString("username"), rs.getString("password").toCharArray());
+                return new ModelStudentUser(rs.getString("username"), rs.getString("password").toCharArray(),rs.getString("status"), rs.getString("fullname"));
             } else {
                 
                 return null;
@@ -130,5 +135,8 @@ public class AddUser {
         } catch (Exception e) {
              return e.getMessage();
         }
-    }
+        
+    
+}
+
 }

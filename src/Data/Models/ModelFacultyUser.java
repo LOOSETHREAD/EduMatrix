@@ -3,6 +3,34 @@ package Data.Models;
 public class ModelFacultyUser {
 
     /**
+     * @return the teacherid
+     */
+    public String getTeacherid() {
+        return teacherid;
+    }
+
+    /**
+     * @param teacherid the teacherid to set
+     */
+    public void setTeacherid(String teacherid) {
+        this.teacherid = teacherid;
+    }
+
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    /**
      * @return the fullname
      */
     public String getFullname() {
@@ -54,23 +82,23 @@ public class ModelFacultyUser {
         this.password = password;
     }
 
-    public ModelFacultyUser(String fullname, String program, String username, char[] password) {
+    public ModelFacultyUser(String fullname, String program, String username, char[] password, String status, String teacherid) {
         this.fullname = fullname;
         this.program = program;
         this.username = username;
         this.password = password;
+        this.status = status;
+        this.teacherid = teacherid;
     }
     
-    public ModelFacultyUser( String username, char[] password) {
-        
-//        this.fullname = fullname;
-//        this.program = program;
+    public ModelFacultyUser( String username, char[] password, String fullname, String status, String teacherid) {
+        this.fullname = fullname;
         this.username = username;
         this.password = password;
+        this.status = status;
+        this.teacherid = teacherid;
     }
 
-    public ModelFacultyUser() {
-    }
         public enum UserRole {
         ADMIN,
         TEACHER
@@ -80,4 +108,6 @@ public class ModelFacultyUser {
     private String username;
     private char[] password;
     private UserRole role;
+    private String status;
+    private String teacherid;
 }

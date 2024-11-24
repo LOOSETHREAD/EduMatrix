@@ -11,6 +11,34 @@ package Data.Models;
 public class ModelStudentUser {
 
     /**
+     * @return the studentid
+     */
+    public String getStudentid() {
+        return studentid;
+    }
+
+    /**
+     * @param studentid the studentid to set
+     */
+    public void setStudentid(String studentid) {
+        this.studentid = studentid;
+    }
+
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    /**
      * @return the fullname
      */
     public String getFullname() {
@@ -74,20 +102,26 @@ public class ModelStudentUser {
 //        this.status = status;
 //    }
 
-    public ModelStudentUser(String fullname, String program, String username, char[] password) {
+    public ModelStudentUser(String fullname, String program, String username, char[] password, String status, String studentid) {
         this.fullname = fullname;
         this.program = program;
         this.username = username;
         this.password = password;
+        this.status = status;
+        this.studentid = studentid;
     }
 
-    public ModelStudentUser(String username, char[] password) {
+    public ModelStudentUser(String username, char[] password, String status, String fullname) {
         this.username = username;
         this.password = password;
+        this.status = status;
+        this.fullname = fullname;
     }
     
     private String fullname;
     private String program;
     private String username;
     private char[] password;
+    private String status;
+    private String studentid;
 }

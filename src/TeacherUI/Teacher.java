@@ -6,9 +6,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Toolkit;
 import raven.glasspanepopup.GlassPanePopup;
-import Admin.adminDashboard;
-import Admin.adminReq;
-import Admin.VerifyTeacher;
 import Login.Main;
 
 
@@ -21,20 +18,20 @@ import Login.Main;
 
 public class Teacher extends javax.swing.JFrame {
 
-     private adminReq req;
-     private VerifyTeacher teacher;
-     private adminDashboard dashh;
-  
+     
+     private taecherDashboard dashh;
+     private TeacherAddCourse addcourse;
+     private TeacherAddStudentToCourse addstudentcourse;
      
     public Teacher() {
         initComponents();
         setSize(Toolkit.getDefaultToolkit().getScreenSize());
         setBackground( Color.white);
         DASHBOARD.setLayout(new BorderLayout());
-        
-        req = new adminReq();
-         teacher = new VerifyTeacher();
-         dashh = new adminDashboard();
+        String teacherid = teacherID.getText();
+        addcourse = new TeacherAddCourse(teacherid);
+        addstudentcourse = new TeacherAddStudentToCourse(teacherid);
+         dashh = new taecherDashboard();
          GlassPanePopup.install(this);
               forms(dashh);
          
@@ -45,6 +42,8 @@ public class Teacher extends javax.swing.JFrame {
      repaint();
      revalidate();
  }
+  
+  
 
     // Method to update the time in the JLabel
 
@@ -60,8 +59,8 @@ public class Teacher extends javax.swing.JFrame {
         DASHBOARD = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         panelBorder1 = new Swing.PanelBorder();
-        jLabel1 = new javax.swing.JLabel();
         fullName1 = new javax.swing.JLabel();
+        teacherID = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         Btndash = new javax.swing.JButton();
         Btn1 = new javax.swing.JButton();
@@ -78,7 +77,7 @@ public class Teacher extends javax.swing.JFrame {
         DASHBOARD.setLayout(DASHBOARDLayout);
         DASHBOARDLayout.setHorizontalGroup(
             DASHBOARDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1127, Short.MAX_VALUE)
+            .addGap(0, 1129, Short.MAX_VALUE)
         );
         DASHBOARDLayout.setVerticalGroup(
             DASHBOARDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,21 +88,18 @@ public class Teacher extends javax.swing.JFrame {
 
         panelBorder1.setBackground(new java.awt.Color(41, 78, 89));
 
-        jLabel1.setText("jLabel1");
-        jLabel1.setOpaque(true);
-        panelBorder1.add(jLabel1);
-        jLabel1.setBounds(10, 0, 38, 40);
-
-        fullName1.setText("jLabel2");
+        fullName1.setForeground(new java.awt.Color(255, 255, 255));
         panelBorder1.add(fullName1);
-        fullName1.setBounds(60, 20, 37, 16);
+        fullName1.setBounds(20, 10, 127, 31);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addComponent(teacherID, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -111,7 +107,9 @@ public class Teacher extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(teacherID, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -133,7 +131,7 @@ public class Teacher extends javax.swing.JFrame {
         Btn1.setBackground(new java.awt.Color(0, 102, 102));
         Btn1.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         Btn1.setForeground(new java.awt.Color(255, 255, 255));
-        Btn1.setText("Verify Requests");
+        Btn1.setText("Add Course");
         Btn1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Btn1.setBorderPainted(false);
         Btn1.setContentAreaFilled(false);
@@ -146,7 +144,7 @@ public class Teacher extends javax.swing.JFrame {
         Btn2.setBackground(new java.awt.Color(0, 102, 102));
         Btn2.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         Btn2.setForeground(new java.awt.Color(255, 255, 255));
-        Btn2.setText("Verify Teachers");
+        Btn2.setText("Verify Students");
         Btn2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Btn2.setBorderPainted(false);
         Btn2.setContentAreaFilled(false);
@@ -198,10 +196,11 @@ public class Teacher extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(DASHBOARD, javax.swing.GroupLayout.DEFAULT_SIZE, 1127, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(DASHBOARD, javax.swing.GroupLayout.PREFERRED_SIZE, 1129, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -221,11 +220,11 @@ public class Teacher extends javax.swing.JFrame {
     }//GEN-LAST:event_BtndashActionPerformed
 
     private void Btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn2ActionPerformed
-        forms(teacher);
+        forms(addstudentcourse);
     }//GEN-LAST:event_Btn2ActionPerformed
 
     private void Btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn1ActionPerformed
-        forms(req);
+        forms(addcourse);
     }//GEN-LAST:event_Btn1ActionPerformed
 
     private void logBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logBtnActionPerformed
@@ -290,10 +289,10 @@ public class Teacher extends javax.swing.JFrame {
     private javax.swing.JButton Btndash;
     private javax.swing.JPanel DASHBOARD;
     public javax.swing.JLabel fullName1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton logBtn;
     public Swing.PanelBorder panelBorder1;
+    public javax.swing.JLabel teacherID;
     // End of variables declaration//GEN-END:variables
 }

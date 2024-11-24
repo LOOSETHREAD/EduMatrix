@@ -4,17 +4,28 @@
  */
 package Admin;
 
+import static Data.Controller.PopulateTable.populateStudentTable;
+import Data.Database.DatabaseConnection;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.sql.PreparedStatement;
+
 /**
  *
  * @author User
  */
 public class VerifyUser extends javax.swing.JPanel {
 
-    /**
-     * Creates new form JPanel
-     */
+    private DefaultTableModel studentReqTableModel;
     public VerifyUser() {
         initComponents();
+        studentReqTableModel = (DefaultTableModel) studentReqTable.getModel();
+        populateStudentTable( studentReqTable);
+    }
+    public void TextFieldEmpty(){
+        fullName.setText("");
+        program.setText("");
+        statusLabel.setText("");
     }
 
     /**
@@ -26,35 +37,277 @@ public class VerifyUser extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        studentReqTable = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        confirmBtn = new javax.swing.JButton();
+        fullName = new javax.swing.JLabel();
+        statusLabel = new javax.swing.JLabel();
+        program = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        declineBtn = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 753, Short.MAX_VALUE)
+        studentReqTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Full Name", "Program", "Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        studentReqTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                studentReqTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(studentReqTable);
+        if (studentReqTable.getColumnModel().getColumnCount() > 0) {
+            studentReqTable.getColumnModel().getColumn(0).setResizable(false);
+            studentReqTable.getColumnModel().getColumn(1).setResizable(false);
+            studentReqTable.getColumnModel().getColumn(2).setMinWidth(0);
+            studentReqTable.getColumnModel().getColumn(2).setPreferredWidth(0);
+            studentReqTable.getColumnModel().getColumn(2).setMaxWidth(0);
+        }
+
+        confirmBtn.setText("Confirm");
+        confirmBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmBtnActionPerformed(evt);
+            }
+        });
+
+        fullName.setBackground(new java.awt.Color(255, 255, 255));
+        fullName.setOpaque(true);
+
+        statusLabel.setBackground(new java.awt.Color(255, 255, 255));
+        statusLabel.setOpaque(true);
+
+        program.setBackground(new java.awt.Color(255, 255, 255));
+        program.setOpaque(true);
+
+        jLabel4.setText("Name");
+
+        jLabel5.setText("Program");
+
+        jLabel6.setText("Status");
+
+        declineBtn.setText("Decline");
+        declineBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                declineBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addGap(176, 176, 176))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(program, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fullName, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                        .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(103, 103, 103))))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(170, 170, 170)
+                .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73)
+                .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 513, Short.MAX_VALUE)
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fullName, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(program, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(declineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap(126, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void studentReqTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentReqTableMouseClicked
+        // TODO add your handling code here:
+        int selectIndex = studentReqTable.getSelectedRow();
+        fullName.setText(studentReqTableModel.getValueAt(selectIndex, 0).toString());
+        program.setText(studentReqTableModel.getValueAt(selectIndex, 1).toString());
+        statusLabel.setText(studentReqTableModel.getValueAt(selectIndex, 2).toString());
+    }//GEN-LAST:event_studentReqTableMouseClicked
+
+    private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = studentReqTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a student to confirm.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            // Extract student details from the selected row
+            String fullName = studentReqTableModel.getValueAt(selectedRow, 0).toString();
+            String program = studentReqTableModel.getValueAt(selectedRow, 1).toString();
+
+            // Prepare the SQL statement for updating the status
+            String sql = "UPDATE studentuser SET status = 'verified' WHERE fullname = ? AND program = ?";
+
+            // Use the singleton instance of DatabaseConnection
+            DatabaseConnection dbConnection = DatabaseConnection.getInstance();
+            try (PreparedStatement pstmt = dbConnection.getConnection().prepareStatement(sql)) {
+                // Set parameters for the query
+                pstmt.setString(1, fullName);
+                pstmt.setString(2, program);
+
+                // Execute the update
+                int rowsUpdated = pstmt.executeUpdate();
+
+                if (rowsUpdated > 0) {
+                    // Update the UI to reflect the changes
+                    studentReqTableModel.removeRow(selectedRow);
+                    JOptionPane.showMessageDialog(this, "Student has been verified successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to verify the student. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (Exception ex) {
+            // Log the exception and notify the user
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "An error occurred while verifying the student.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        TextFieldEmpty();
+    }//GEN-LAST:event_confirmBtnActionPerformed
+
+    private void declineBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = studentReqTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a student to decline.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Extract teacher details from the selected row
+        String fullName = studentReqTableModel.getValueAt(selectedRow, 0).toString();
+        String program = studentReqTableModel.getValueAt(selectedRow, 1).toString();
+
+        try {
+            // SQL query to delete the teacher from the database
+            String sql = "DELETE FROM facultyuser WHERE fullname = ? AND program = ?";
+
+            // Use the singleton instance of DatabaseConnection
+            DatabaseConnection dbConnection = DatabaseConnection.getInstance();
+            try (PreparedStatement pstmt = dbConnection.getConnection().prepareStatement(sql)) {
+                // Set parameters for the query
+                pstmt.setString(1, fullName);
+                pstmt.setString(2, program);
+
+                // Execute the delete operation
+                int rowsDeleted = pstmt.executeUpdate();
+
+                if (rowsDeleted > 0) {
+                    // Update the UI to remove the row
+                    studentReqTableModel.removeRow(selectedRow);
+                    JOptionPane.showMessageDialog(this, "Student request has been declined and removed.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to decline the student request. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            TextFieldEmpty();
+            }
+        } catch (Exception ex) {
+            // Log the exception and notify the user
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "An error occurred while declining the student request.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_declineBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton confirmBtn;
+    private javax.swing.JButton declineBtn;
+    private javax.swing.JLabel fullName;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel program;
+    private javax.swing.JLabel statusLabel;
+    private javax.swing.JTable studentReqTable;
     // End of variables declaration//GEN-END:variables
 }
