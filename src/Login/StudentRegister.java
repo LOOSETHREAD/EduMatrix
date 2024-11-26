@@ -117,6 +117,11 @@ public class StudentRegister extends javax.swing.JPanel {
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
 
         programBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Accounting", "IT", "ComEng" }));
+        programBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                programBoxActionPerformed(evt);
+            }
+        });
         jPanel1.add(programBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 240, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -174,6 +179,10 @@ try {
     private void fullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fullNameActionPerformed
+
+    private void programBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_programBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_programBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Toolkit;
-import raven.glasspanepopup.GlassPanePopup;
+import Swing.GlassPanePopup;
 import Login.Main;
 
 
@@ -22,17 +22,18 @@ public class Teacher extends javax.swing.JFrame {
      private taecherDashboard dashh;
      private TeacherAddCourse addcourse;
      private TeacherAddStudentToCourse addstudentcourse;
+     private teacherStudent teacherstud;
      
     public Teacher() {
         initComponents();
         setSize(Toolkit.getDefaultToolkit().getScreenSize());
         setBackground( Color.white);
         DASHBOARD.setLayout(new BorderLayout());
-        String teacherid = teacherID.getText();
-        addcourse = new TeacherAddCourse(teacherid);
-        addstudentcourse = new TeacherAddStudentToCourse(teacherid);
+        addcourse = new TeacherAddCourse(teacherID.getText());
+        addstudentcourse = new TeacherAddStudentToCourse(teacherID.getText());
+        teacherstud = new teacherStudent();
+        GlassPanePopup.install(this);
          dashh = new taecherDashboard();
-         GlassPanePopup.install(this);
               forms(dashh);
          
     }
@@ -66,6 +67,7 @@ public class Teacher extends javax.swing.JFrame {
         Btn1 = new javax.swing.JButton();
         Btn2 = new javax.swing.JButton();
         logBtn = new javax.swing.JButton();
+        Btndash1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -118,7 +120,7 @@ public class Teacher extends javax.swing.JFrame {
         Btndash.setBackground(new java.awt.Color(0, 102, 102));
         Btndash.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         Btndash.setForeground(new java.awt.Color(255, 255, 255));
-        Btndash.setText("Dashboard");
+        Btndash.setText("Course List");
         Btndash.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Btndash.setBorderPainted(false);
         Btndash.setContentAreaFilled(false);
@@ -167,27 +169,53 @@ public class Teacher extends javax.swing.JFrame {
             }
         });
 
+        Btndash1.setBackground(new java.awt.Color(0, 102, 102));
+        Btndash1.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        Btndash1.setForeground(new java.awt.Color(255, 255, 255));
+        Btndash1.setText("Dashboard");
+        Btndash1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        Btndash1.setBorderPainted(false);
+        Btndash1.setContentAreaFilled(false);
+        Btndash1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btndash1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Btndash, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(Btn1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(Btn2, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
             .addComponent(logBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Btndash, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(Btndash1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(Btndash, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(171, 171, 171)
                 .addComponent(Btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(logBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(577, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Btndash, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(135, 135, 135)
+                    .addComponent(Btndash1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(705, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -216,15 +244,19 @@ public class Teacher extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtndashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtndashActionPerformed
-        forms(dashh);
+        forms(teacherstud);
     }//GEN-LAST:event_BtndashActionPerformed
 
     private void Btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn2ActionPerformed
+        String currentTeacherID = teacherID.getText(); // Get the current teacher ID
+    addstudentcourse.updateTeacherID(currentTeacherID);
         forms(addstudentcourse);
     }//GEN-LAST:event_Btn2ActionPerformed
 
     private void Btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn1ActionPerformed
-        forms(addcourse);
+         String currentTeacherID = teacherID.getText(); // Get the current teacher ID
+    addcourse.updateTeacherID(currentTeacherID);  // Update the panel with the current teacher ID
+    forms(addcourse);
     }//GEN-LAST:event_Btn1ActionPerformed
 
     private void logBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logBtnActionPerformed
@@ -233,6 +265,10 @@ public class Teacher extends javax.swing.JFrame {
         main.setVisible(true);
         dispose();
     }//GEN-LAST:event_logBtnActionPerformed
+
+    private void Btndash1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btndash1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Btndash1ActionPerformed
 
 
    
@@ -287,6 +323,7 @@ public class Teacher extends javax.swing.JFrame {
     private javax.swing.JButton Btn1;
     private javax.swing.JButton Btn2;
     private javax.swing.JButton Btndash;
+    private javax.swing.JButton Btndash1;
     private javax.swing.JPanel DASHBOARD;
     public javax.swing.JLabel fullName1;
     private javax.swing.JPanel jPanel1;

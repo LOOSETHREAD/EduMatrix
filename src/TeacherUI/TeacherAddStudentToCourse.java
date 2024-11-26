@@ -4,19 +4,49 @@
  */
 package TeacherUI;
 
+import Data.Controller.AddData;
 import Data.Controller.PopulateTable;
+import static Data.Controller.PopulateTable.populateCourseTable;
+import static Data.Controller.PopulateTable.populateRequestStudentToCourseTable;
+import static Data.Controller.PopulateTable.populateStudentToCourseTable;
+import Data.Models.ModelCourse;
+import Data.Models.ModelStudentCourse;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author User
  */
 public class TeacherAddStudentToCourse extends javax.swing.JPanel {
-
-    public TeacherAddStudentToCourse(String teacherid) {
+    private AddData datacontroller;
+    private DefaultTableModel studentCourseTableModel;
+    public TeacherAddStudentToCourse(String teacheriddata) {
         initComponents();
-        PopulateTable.populateCourseTable(courseTable,teacherid);
+        datacontroller = new AddData(studentCourseTableModel);
+        teacherid.setVisible(false);
+        populateCourseTable(courseTable,teacheriddata);
+        populateRequestStudentToCourseTable(studentReqCourse,teacheriddata);
+        
     }
-
+    public void updateTeacherID(String teacherID) {
+    teacherid.setText(teacherID); // Update the teacher ID field
+    populateCourseTable(courseTable, teacherID); // Refresh the table for the new teacher
+    populateRequestStudentToCourseTable(studentReqCourse,teacherID);
+}
+    public void addBtn() {
+        String teacherId = teacherid.getText();
+        ModelStudentCourse newdata = new ModelStudentCourse(courseCode.getText(), courseName.getText(), studentName.getText(),studentID.getText(),teacherid.getText());
+        datacontroller.addStudentToCourse(newdata);
+        populateStudentToCourseTable(studentCourseTable,teacherId);
+        TextFieldEmpty();
+    }
+    public void TextFieldEmpty(){
+        courseCode.setText("");
+        courseName.setText("");
+        studentName.setText("");
+        studentID.setText("");
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,24 +62,39 @@ public class TeacherAddStudentToCourse extends javax.swing.JPanel {
         studentCourseTable = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         studentReqCourse = new javax.swing.JTable();
+        teacherid = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        courseCode = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        courseName = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        studentName = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        studentID = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         courseTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Course Code", "Course Name", "Description", "ID Course"
+                "Course Code", "Course Name", "Description", "ID Course", "teacherid"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        courseTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                courseTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(courseTable);
@@ -62,21 +107,24 @@ public class TeacherAddStudentToCourse extends javax.swing.JPanel {
             courseTable.getColumnModel().getColumn(3).setMinWidth(0);
             courseTable.getColumnModel().getColumn(3).setPreferredWidth(0);
             courseTable.getColumnModel().getColumn(3).setMaxWidth(0);
+            courseTable.getColumnModel().getColumn(4).setMinWidth(0);
+            courseTable.getColumnModel().getColumn(4).setPreferredWidth(0);
+            courseTable.getColumnModel().getColumn(4).setMaxWidth(0);
         }
 
         studentCourseTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Course Code", "Course Name", "Program", "Full Name"
+                "Course Code", "Course Name", "Full Name", "Student ID", "teacherid"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -89,6 +137,9 @@ public class TeacherAddStudentToCourse extends javax.swing.JPanel {
             studentCourseTable.getColumnModel().getColumn(1).setResizable(false);
             studentCourseTable.getColumnModel().getColumn(2).setResizable(false);
             studentCourseTable.getColumnModel().getColumn(3).setResizable(false);
+            studentCourseTable.getColumnModel().getColumn(4).setMinWidth(0);
+            studentCourseTable.getColumnModel().getColumn(4).setPreferredWidth(0);
+            studentCourseTable.getColumnModel().getColumn(4).setMaxWidth(0);
         }
 
         studentReqCourse.setModel(new javax.swing.table.DefaultTableModel(
@@ -99,7 +150,7 @@ public class TeacherAddStudentToCourse extends javax.swing.JPanel {
                 {null, null, null}
             },
             new String [] {
-                "Student ID", "Full Name", "Program"
+                "Full Name", "Student ID", "Course Code"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -110,12 +161,32 @@ public class TeacherAddStudentToCourse extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        studentReqCourse.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                studentReqCourseMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(studentReqCourse);
         if (studentReqCourse.getColumnModel().getColumnCount() > 0) {
             studentReqCourse.getColumnModel().getColumn(0).setResizable(false);
             studentReqCourse.getColumnModel().getColumn(1).setResizable(false);
             studentReqCourse.getColumnModel().getColumn(2).setResizable(false);
         }
+
+        jLabel1.setText("Course Code");
+
+        jLabel2.setText("Course Name");
+
+        jLabel3.setText("Student Name");
+
+        jLabel4.setText("Student ID");
+
+        jButton1.setText("Confirm");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -127,30 +198,104 @@ public class TeacherAddStudentToCourse extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(teacherid, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(courseName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(courseCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(studentName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(studentID, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
+                        .addGap(48, 48, 48)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 10, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addComponent(courseCode, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(courseName, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(studentName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(studentID, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(teacherid, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void courseTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_courseTableMouseClicked
+        // TODO add your handling code here:
+         DefaultTableModel model = (DefaultTableModel) courseTable.getModel();
+        int selectIndex = courseTable.getSelectedRow();
+        courseCode.setText(model.getValueAt(selectIndex, 0).toString());
+        courseName.setText(model.getValueAt(selectIndex, 1).toString());
+    }//GEN-LAST:event_courseTableMouseClicked
+
+    private void studentReqCourseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentReqCourseMouseClicked
+        // TODO add your handling code here:
+         DefaultTableModel model = (DefaultTableModel) studentReqCourse.getModel();
+        int selectIndex = studentReqCourse.getSelectedRow();
+        studentName.setText(model.getValueAt(selectIndex, 0).toString());
+        studentID.setText(model.getValueAt(selectIndex, 1).toString());
+    }//GEN-LAST:event_studentReqCourseMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        addBtn();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel courseCode;
+    private javax.swing.JLabel courseName;
     private javax.swing.JTable courseTable;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable studentCourseTable;
+    private javax.swing.JLabel studentID;
+    private javax.swing.JLabel studentName;
     private javax.swing.JTable studentReqCourse;
+    private javax.swing.JLabel teacherid;
     // End of variables declaration//GEN-END:variables
 }

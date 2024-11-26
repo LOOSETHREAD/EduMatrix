@@ -130,6 +130,85 @@ public class PopulateTable{
             }
         }
     }
+    public static void populateRequestStudentToCourseTable(JTable table, String teacherid) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            String query = "SELECT * FROM studentrequestcourse WHERE teacherid = ?";
+            ps = DatabaseConnection.getInstance().getConnection().prepareStatement(query);
+            ps.setString(1, teacherid);  // Set the teacherid parameter
+
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0); // Clear existing rows in the table
+
+            rs = ps.executeQuery();
+
+            // Populate the table with filtered results
+            while (rs.next()) {
+                String fullName = rs.getString("fullname");
+                String studentid = rs.getString("studentid");
+                String courseCode = rs.getString("coursecode");
+                int id = rs.getInt("idstudentrequestcourse");
+                String teacherIdInTable = rs.getString("teacherid");
+                if (teacherIdInTable.equals(teacherid)) {
+                    model.addRow(new Object[]{fullName, studentid, courseCode, id, teacherIdInTable});
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error closing connection: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }
+    public static void populateStudentToCourseTable(JTable table, String teacherid) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            String query = "SELECT * FROM student_to_course WHERE teacherid = ?";
+            ps = DatabaseConnection.getInstance().getConnection().prepareStatement(query);
+            ps.setString(1, teacherid);  // Set the teacherid parameter
+
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0); // Clear existing rows in the table
+
+            rs = ps.executeQuery();
+
+            // Populate the table with filtered results
+            while (rs.next()) {
+                String courseCode = rs.getString("coursecode");
+                String courseName = rs.getString("coursename");
+                String fullName = rs.getString("student_name");
+                String studentid = rs.getString("studentID");
+                int id = rs.getInt("idcourses");
+                String teacherIdInTable = rs.getString("teacherid");
+                if (teacherIdInTable.equals(teacherid)) {
+                    model.addRow(new Object[]{courseCode,courseName,fullName, studentid, id, teacherIdInTable});
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error closing connection: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }
 
 public static String getTeacherIDForLoggedInUser(String username) {
     String teacherID = null; // Variable to store the retrieved teacherID

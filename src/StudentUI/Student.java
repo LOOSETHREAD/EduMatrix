@@ -6,7 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Toolkit;
-import raven.glasspanepopup.GlassPanePopup;
+import Swing.GlassPanePopup;
 
 /**
  *
@@ -279,7 +279,7 @@ public class Student extends javax.swing.JFrame {
     }//GEN-LAST:event_Btn2ActionPerformed
 
     private void Btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn1ActionPerformed
-        forms(Sreq);
+         GlassPanePopup.showPopup(Sreq);
     }//GEN-LAST:event_Btn1ActionPerformed
 
     private void LogoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutBtnActionPerformed

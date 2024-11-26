@@ -6,6 +6,7 @@ package Data.Controller;
 
 import Data.Database.DatabaseConnection;
 import Data.Models.ModelCourse;
+import Data.Models.ModelStudentCourse;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -105,6 +106,37 @@ public class AddData {
         }
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(null, "Error Updating data:" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        
+    }finally{
+        try {
+            if (p !=null) p.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    }
+    public void addStudentToCourse(ModelStudentCourse addData) {
+    try {
+       String sql = "INSERT INTO student_to_course (coursecode, coursename, student_name, studentID, teacherid) VALUES (?, ?, ?, ?, ?)";
+        
+        
+        p = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+        p.setString(1, addData.getCourseCode());
+        p.setString(2, addData.getCourseName());
+        p.setString(3, addData.getStudentName());
+        p.setString(4, addData.getStudentID());
+        p.setString(5, addData.getTeacherid());
+        int rowsAffected = p.executeUpdate();
+        if(rowsAffected > 0)
+        {
+            JOptionPane.showMessageDialog(null, "Data Added Succesfully");
+        }else{
+            JOptionPane.showMessageDialog(null, "Failed to add data.");
+            
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error Adding data:" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         
     }finally{
         try {
